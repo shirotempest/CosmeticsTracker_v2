@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Contacts</string>
+
+    <string name="price">Price</string>
+    <string name="name">Product Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="brand">Brand</string>
+    <string name="expiryDate">Expiry Date</string>
+
+    <string name="invalid_name">Invalid Product Name</string>
+    <string name="invalid_price">Invalid Price</string>
+    <string name="invalid_date">Invalid Expiry Date</string>
+    <string name="invalid_quantity">Invalid Quantity</string>
+    <string name="invalid_brand">Invalid Brand</string>
+    <string name="product">Person</string>
+    <string name="are_you_sure">Are you sure to delete this?</string>
+    <string name="no_products">Start building and using your collection!</string>
+</resources>
