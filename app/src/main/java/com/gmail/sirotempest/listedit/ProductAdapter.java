@@ -74,24 +74,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         Date expiryDate = null;
 
-        holder.expiryDateTextView.setTextColor(Color.RED);
-
-        try {
-            expiryDate = format.parse(String.valueOf(holder.mItem.expiryDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         long diff;
 
         try {
-            diff = expiryDate.getTime() - currentDate.getTime();
+            diff = holder.mItem.expiryDate.getTime() - currentDate.getTime();
             int daysLeft =  (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-            /*if(daysLeft < 30) {
-                holder.expiryDateTextView.setTextColor(ContextCompat.getColor(context, R.color.expireText));
-            }*/
-            //holder.expiryDateTextView.setTextColor(ContextCompat.getColor(context, R.color.expireText));
-            //holder.expiryDateTextView.setTextColor(Color.RED);
+            if(daysLeft < 30) {
+                holder.expiryDateTextView.setTextColor(Color.RED);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
