@@ -13,11 +13,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public abstract ProductDao personModel();
+    public abstract ProductDao productModel();
 
     public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "persons")
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "products")
                     .allowMainThreadQueries()
                     .build();
         }

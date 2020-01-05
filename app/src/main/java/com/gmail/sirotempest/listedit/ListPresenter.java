@@ -25,8 +25,8 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
-    public void addNewPerson() {
-        mView.showAddPerson();
+    public void addNewProduct() {
+        mView.showAddProduct();
     }
 
     @Override
@@ -35,11 +35,11 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
-    public void populatePeople() {
-        productDao.findAllPersons().observeForever(new Observer<List<Product>>() {
+    public void displayProducts() {
+        productDao.findAllProducts().observeForever(new Observer<List<Product>>() {
             @Override
             public void onChanged(@Nullable List<Product> products) {
-                mView.setPersons(products);
+                mView.setProducts(products);
                 if (products == null || products.size() < 1) {
                     mView.showEmptyMessage();
                 }
@@ -59,7 +59,7 @@ public class ListPresenter implements ListContract.Presenter {
 
     @Override
     public void delete(long personId) {
-        Product product = productDao.findPerson(personId);
-        productDao.deletePerson(product);
+        Product product = productDao.findProduct(personId);
+        productDao.deleteProduct(product);
     }
 }

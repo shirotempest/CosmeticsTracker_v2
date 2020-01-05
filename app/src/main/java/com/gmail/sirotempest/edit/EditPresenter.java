@@ -23,7 +23,7 @@ public class EditPresenter implements EditContract.Presenter {
 
     @Override
     public void save(Product product) {
-        long ids = this.productDao.insertPerson(product);
+        long ids = this.productDao.insertProduct(product);
         mView.close();
     }
 
@@ -35,19 +35,19 @@ public class EditPresenter implements EditContract.Presenter {
             return false;
         }
         if (product.brand.isEmpty()) {
-            mView.showErrorMessage(Constants.FIELD_ADDRESS);
+            mView.showErrorMessage(Constants.FIELD_BRAND);
             return false;
         }
         if (product.quantity == 0) {
-            mView.showErrorMessage(Constants.FIELD_PHONE);
+            mView.showErrorMessage(Constants.FIELD_QUANTITY);
             return false;
         }
         if (product.price == 0) {
-            mView.showErrorMessage(Constants.FIELD_EMAIL);
+            mView.showErrorMessage(Constants.FIELD_PRICE);
             return false;
         }
         if (product.expiryDate == null) {
-            mView.showErrorMessage(Constants.FIELD_BIRTHDAY);
+            mView.showErrorMessage(Constants.FIELD_EXPIRYDATE);
             return false;
         }
 
@@ -60,8 +60,8 @@ public class EditPresenter implements EditContract.Presenter {
     }
 
     @Override
-    public void getPersonAndPopulate(long id) {
-        Product product = productDao.findPerson(id);
+    public void getProductAndPopulate(long id) {
+        Product product = productDao.findProduct(id);
         if (product != null) {
             mView.populate(product);
         }
@@ -69,7 +69,7 @@ public class EditPresenter implements EditContract.Presenter {
 
     @Override
     public void update(Product product) {
-        int ids = this.productDao.updatePerson(product);
+        int ids = this.productDao.updateProduct(product);
         mView.close();
     }
 }

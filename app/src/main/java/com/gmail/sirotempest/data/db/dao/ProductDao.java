@@ -18,28 +18,28 @@ public interface ProductDao {
 
 
     @Query("SELECT * FROM products ORDER BY name ASC")
-    LiveData<List<Product>> findAllPersons();
+    LiveData<List<Product>> findAllProducts();
 
     @Query("SELECT * FROM products")
     List<Product> getAllChannels();
 
     @Query("SELECT * FROM products WHERE id=:id")
-    Product findPersonById(String id);
+    Product findProductById(String id);
 
     @Query("SELECT * FROM products WHERE id=:id")
-    Product findPerson(long id);
+    Product findProduct(long id);
 
     @Insert(onConflict = IGNORE)
-    long insertPerson(Product product);
+    long insertProduct(Product product);
 
     @Update
-    int updatePerson(Product product);
+    int updateProduct(Product product);
 
     @Update
-    void updatePerson(List<Product> people);
+    void updateProduct(List<Product> products);
 
     @Delete
-    void deletePerson(Product product);
+    void deleteProduct(Product product);
 
     @Query("DELETE FROM products")
     void deleteAll();

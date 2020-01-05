@@ -15,7 +15,7 @@ public interface EditContract {
 
         void showDateDialog();
 
-        void getPersonAndPopulate(long id);
+        void getProductAndPopulate(long id);
 
         void update(Product product);
     }

@@ -33,7 +33,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.addNewPerson();
+                mPresenter.addNewProduct();
             }
         });
 
@@ -46,23 +46,23 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         recyclerView.setAdapter(mProductAdapter);
 
         AppDatabase db = AppDatabase.getDatabase(getApplication());
-        mPresenter = new ListPresenter(this, db.personModel());
+        mPresenter = new ListPresenter(this, db.productModel());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.populatePeople();
+        mPresenter.displayProducts();
     }
 
     @Override
-    public void showAddPerson() {
+    public void showAddProduct() {
         Intent intent = new Intent(this, EditActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void setPersons(List<Product> products) {
+    public void setProducts(List<Product> products) {
         mEmptyTextView.setVisibility(View.GONE);
         mProductAdapter.setValues(products);
     }
@@ -70,7 +70,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void showEditScreen(long id) {
         Intent intent = new Intent(this, EditActivity.class);
-        intent.putExtra(Constants.PERSON_ID, id);
+        intent.putExtra(Constants.PRODUCT_ID, id);
         startActivity(intent);
     }
 
@@ -78,7 +78,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void showDeleteConfirmDialog(Product product) {
         DeleteConfirmFragment fragment = new DeleteConfirmFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(Constants.PERSON_ID, product.id);
+        bundle.putLong(Constants.PRODUCT_ID, product.id);
         fragment.setArguments(bundle);
         fragment.show(getSupportFragmentManager(), "confirmDialog");
     }

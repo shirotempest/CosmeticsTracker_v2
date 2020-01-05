@@ -18,7 +18,7 @@ public class DeleteConfirmFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final long personId = getArguments().getLong(Constants.PERSON_ID);
+        final long personId = getArguments().getLong(Constants.PRODUCT_ID);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.are_you_sure);
 

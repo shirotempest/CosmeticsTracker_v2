@@ -20,16 +20,16 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
     private EditContract.Presenter mPresenter;
 
     private EditText mNameEditText;
-    private EditText mAddressEditText;
-    private EditText mEmailEditText;
-    private EditText mBirthdayEditText;
-    private EditText mPhoneEditText;
+    private EditText mBrandEditText;
+    private EditText mPriceEditText;
+    private EditText mExpiryDateEditText;
+    private EditText mQuantityEditText;
 
     private TextInputLayout mNameTextInputLayout;
-    private TextInputLayout mAddressInputLayout;
-    private TextInputLayout mEmailInputLayout;
-    private TextInputLayout mBirthdayInputLayout;
-    private TextInputLayout mPhoneTextInputLayout;
+    private TextInputLayout mBrandTextInputLayout;
+    private TextInputLayout mPriceTextInputLayout;
+    private TextInputLayout mExpiryDateTextInputLayout;
+    private TextInputLayout mQuantityTextInputLayout;
 
     private FloatingActionButton mFab;
 
@@ -45,7 +45,7 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
         checkMode();
 
         AppDatabase db = AppDatabase.getDatabase(getApplication());
-        mPresenter = new EditPresenter(this, db.personModel());
+        mPresenter = new EditPresenter(this, db.productModel());
 
         initViews();
     }
@@ -54,31 +54,31 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
     protected void onStart() {
         super.onStart();
         if (mEditMode) {
-            mPresenter.getPersonAndPopulate(product.id);
+            mPresenter.getProductAndPopulate(product.id);
         }
     }
 
     private void checkMode() {
         if (getIntent().getExtras() != null) {
-            product.id = getIntent().getLongExtra(Constants.PERSON_ID, 0);
+            product.id = getIntent().getLongExtra(Constants.PRODUCT_ID, 0);
             mEditMode = true;
         }
     }
 
     private void initViews() {
         mNameEditText = (EditText) findViewById(R.id.nameEditText);
-        mAddressEditText = (EditText) findViewById(R.id.brandEditText);
-        mEmailEditText = (EditText) findViewById(R.id.priceEditText);
-        mBirthdayEditText = (EditText) findViewById(R.id.expiryDateEditText);
-        mPhoneEditText = (EditText) findViewById(R.id.quantityEditText);
+        mBrandEditText = (EditText) findViewById(R.id.brandEditText);
+        mPriceEditText = (EditText) findViewById(R.id.priceEditText);
+        mExpiryDateEditText = (EditText) findViewById(R.id.expiryDateEditText);
+        mQuantityEditText = (EditText) findViewById(R.id.quantityEditText);
 
         mNameTextInputLayout = (TextInputLayout) findViewById(R.id.nameTextInputLayout);
-        mAddressInputLayout = (TextInputLayout) findViewById(R.id.brandTextInputLayout);
-        mEmailInputLayout = (TextInputLayout) findViewById(R.id.priceTextInputLayout);
-        mBirthdayInputLayout = (TextInputLayout) findViewById(R.id.expiryDateTextInputLayout);
-        mPhoneTextInputLayout = (TextInputLayout) findViewById(R.id.quantityTextInputLayout);
+        mBrandTextInputLayout = (TextInputLayout) findViewById(R.id.brandTextInputLayout);
+        mPriceTextInputLayout = (TextInputLayout) findViewById(R.id.priceTextInputLayout);
+        mExpiryDateTextInputLayout = (TextInputLayout) findViewById(R.id.expiryDateTextInputLayout);
+        mQuantityTextInputLayout = (TextInputLayout) findViewById(R.id.quantityTextInputLayout);
 
-        mBirthdayEditText.setOnClickListener(new View.OnClickListener() {
+        mExpiryDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.showDateDialog();
@@ -92,9 +92,21 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
             public void onClick(View v) {
 
                 product.name = mNameEditText.getText().toString();
-                product.brand = mAddressEditText.getText().toString();
-                product.price = Integer.parseInt(mEmailEditText.getText().toString());
-                product.quantity = Integer.parseInt(mPhoneEditText.getText().toString());
+                product.brand = mBrandEditText.getText().toString();
+                if (mPriceEditText.getText().toString().isEmpty()) {
+                    product.price = 0;
+                }
+                else {
+                    product.price = Integer.parseInt(mPriceEditText.getText().toString());
+                }
+                //product.price = Integer.parseInt(mPriceEditText.getText().toString());
+                if (mQuantityEditText.getText().toString().isEmpty()) {
+                    product.quantity = 0;
+                }
+                else {
+                    product.quantity = Integer.parseInt(mQuantityEditText.getText().toString());
+                }
+                //product.quantity = Integer.parseInt(mQuantityEditText.getText().toString());
 
                 boolean valid = mPresenter.validate(product);
 
@@ -118,24 +130,24 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
     public void showErrorMessage(int field) {
         if (field == Constants.FIELD_NAME) {
             mNameTextInputLayout.setError(getString(R.string.invalid_name));
-        } else if (field == Constants.FIELD_EMAIL) {
-            mEmailInputLayout.setError(getString(R.string.invalid_price));
-        } else if (field == Constants.FIELD_PHONE) {
-            mPhoneTextInputLayout.setError(getString(R.string.invalid_quantity));
-        } else if (field == Constants.FIELD_ADDRESS) {
-            mAddressInputLayout.setError(getString(R.string.invalid_brand));
-        } else if (field == Constants.FIELD_BIRTHDAY) {
-            mBirthdayInputLayout.setError(getString(R.string.invalid_date));
+        } else if (field == Constants.FIELD_PRICE) {
+            mPriceTextInputLayout.setError(getString(R.string.invalid_price));
+        } else if (field == Constants.FIELD_QUANTITY) {
+            mQuantityTextInputLayout.setError(getString(R.string.invalid_quantity));
+        } else if (field == Constants.FIELD_BRAND) {
+            mBrandTextInputLayout.setError(getString(R.string.invalid_brand));
+        } else if (field == Constants.FIELD_EXPIRYDATE) {
+            mExpiryDateTextInputLayout.setError(getString(R.string.invalid_date));
         }
     }
 
     @Override
     public void clearPreErrors() {
         mNameTextInputLayout.setErrorEnabled(false);
-        mEmailInputLayout.setErrorEnabled(false);
-        mPhoneTextInputLayout.setErrorEnabled(false);
-        mAddressInputLayout.setErrorEnabled(false);
-        mBirthdayInputLayout.setErrorEnabled(false);
+        mPriceTextInputLayout.setErrorEnabled(false);
+        mQuantityTextInputLayout.setErrorEnabled(false);
+        mBrandTextInputLayout.setErrorEnabled(false);
+        mExpiryDateTextInputLayout.setErrorEnabled(false);
     }
 
     @Override
@@ -153,15 +165,16 @@ public class EditActivity extends AppCompatActivity implements EditContract.View
     public void populate(Product product) {
         this.product = product;
         mNameEditText.setText(product.name);
-        mAddressEditText.setText(product.brand);
-        mEmailEditText.setText(product.price);
-        mBirthdayEditText.setText(Util.format(product.expiryDate));
-        mPhoneEditText.setText(product.quantity);
+        mBrandEditText.setText(product.brand);
+        mPriceEditText.setText(String.valueOf(product.price));
+        mExpiryDateEditText.setText(Util.format(product.expiryDate));
+        mQuantityEditText.setText(String.valueOf(product.quantity));
+        //setText(String.valueOf(mValues.get(position).quantity))
     }
 
     @Override
     public void setSelectedDate(Date date) {
         product.expiryDate = date;
-        mBirthdayEditText.setText(Util.format(date));
+        mExpiryDateEditText.setText(Util.format(date));
     }
 }

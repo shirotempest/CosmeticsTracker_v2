@@ -1,22 +1,33 @@
 package com.gmail.sirotempest.listedit;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import com.gmail.sirotempest.R;
 import com.gmail.sirotempest.data.db.entity.Product;
 import com.gmail.sirotempest.utils.Util;
+//import com.gmail.sirotempest.utils.Util.productAboutToExpire;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private List<Product> mValues;
     private ListContract.OnItemClickListener mOnItemClickListener;
+    private Context context;
 
     public ProductAdapter(ListContract.OnItemClickListener onItemClickListener) {
         mValues = new ArrayList<>();
@@ -33,10 +44,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.nameTextView.setText(mValues.get(position).name);
-        holder.quantityTextView.setText(mValues.get(position).quantity);
+        holder.quantityTextView.setText(String.valueOf(mValues.get(position).quantity));
 
         holder.brandTextView.setText(holder.mItem.brand);
-        holder.priceTextView.setText(holder.mItem.price);
+        holder.priceTextView.setText(String.valueOf(holder.mItem.price));
         holder.expiryDateTextView.setText(Util.formatMin(holder.mItem.expiryDate));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +64,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 return false;
             }
         });
+
+        /*if(Util.productAboutToExpire(String.valueOf(holder.mItem.expiryDate), context)){
+            holder.expiryDateTextView.setTextColor(ContextCompat.getColor(context, R.color.expireText));
+        }*/
+
+        Date currentDate = new java.util.Date();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        Date expiryDate = null;
+
+        holder.expiryDateTextView.setTextColor(Color.RED);
+
+        try {
+            expiryDate = format.parse(String.valueOf(holder.mItem.expiryDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long diff;
+
+        try {
+            diff = expiryDate.getTime() - currentDate.getTime();
+            int daysLeft =  (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            /*if(daysLeft < 30) {
+                holder.expiryDateTextView.setTextColor(ContextCompat.getColor(context, R.color.expireText));
+            }*/
+            //holder.expiryDateTextView.setTextColor(ContextCompat.getColor(context, R.color.expireText));
+            //holder.expiryDateTextView.setTextColor(Color.RED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        //compare if there are more than x days with food expiration date, where x is periodicity defined at settings (default is 3 days)
+
     }
 
     @Override
@@ -84,6 +131,4 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             brandTextView = (TextView) view.findViewById(R.id.brandTextView);
         }
     }
-
-
 }

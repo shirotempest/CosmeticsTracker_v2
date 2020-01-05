@@ -10,11 +10,11 @@ public interface ListContract {
 
     interface Presenter extends BasePresenter {
 
-        void addNewPerson();
+        void addNewProduct();
 
         void result(int requestCode, int resultCode);
 
-        void populatePeople();
+        void displayProducts();
 
         void openEditScreen(Product product);
 
@@ -25,9 +25,9 @@ public interface ListContract {
 
     interface View extends BaseView<ListContract.Presenter> {
 
-        void showAddPerson();
+        void showAddProduct();
 
-        void setPersons(List<Product> products);
+        void setProducts(List<Product> products);
 
         void showEditScreen(long id);
 
