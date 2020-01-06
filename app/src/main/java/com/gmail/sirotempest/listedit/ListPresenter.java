@@ -58,8 +58,17 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
+    public void filterStatus(int chosenStatus, Product product) {
+        if (chosenStatus == product.id){
+    }
+
+    @Override
     public void delete(long personId) {
         Product product = productDao.findProduct(personId);
         productDao.deleteProduct(product);
     }
+
+
+
+
 }
