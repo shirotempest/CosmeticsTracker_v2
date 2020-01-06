@@ -20,6 +20,7 @@ public class Product {
     public Date expiryDate;
     public int quantity;
     public int price;
+    public int status;
     
     @Ignore
     public Product() {
@@ -28,13 +29,15 @@ public class Product {
         this.expiryDate = null;
         this.quantity = 0;
         this.price = 0;
+        this.status = 0;
     }
 
-    public Product(String name, String brand, Date expiryDate, int quantity, int price) {
+    public Product(String name, String brand, Date expiryDate, int quantity, int price, int status) {
         this.name = name;
         this.brand = brand;
         this.expiryDate = expiryDate;
         this.quantity = quantity;
         this.price = price;
+        this.status = status;
     }
 }

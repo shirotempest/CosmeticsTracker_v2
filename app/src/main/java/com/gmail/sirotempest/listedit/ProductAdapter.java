@@ -2,7 +2,6 @@ package com.gmail.sirotempest.listedit;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,9 +85,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             e.printStackTrace();
         }
 
-
-
-        //compare if there are more than x days with food expiration date, where x is periodicity defined at settings (default is 3 days)
+        //compare if there are more than x days with food expiration date
 
     }
 
