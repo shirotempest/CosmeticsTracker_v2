@@ -32,7 +32,7 @@
         app:layout_anchor="@id/list"
         app:layout_anchorGravity="bottom|right|end" />
 
-    <item
+<!--    <item
         android:id="@+id/filter_collection"
         android:icon="@drawable/ic_filter"
         android:title="@string/filter_label"
@@ -41,7 +41,7 @@
         <menu>
 
         </menu>
-    </item>
+    </item>-->
 
 </android.support.design.widget.CoordinatorLayout>
 

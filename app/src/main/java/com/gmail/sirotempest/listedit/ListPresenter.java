@@ -57,10 +57,18 @@ public class ListPresenter implements ListContract.Presenter {
         mView.showDeleteConfirmDialog(product);
     }
 
-    @Override
-    public void filterStatus(int chosenStatus, Product product) {
-        if (chosenStatus == product.id){
-    }
+/*    @Override
+    public void filterStatus(final int chosenStatus) {
+        productDao.filterStatus(chosenStatus).observeForever(new Observer<List<Product>>() {
+            @Override
+            public void onChanged(@Nullable List<Product> products) {
+            mView.setProducts(products);
+                if (products == null || products.size() < 1) {
+                    mView.showEmptyMessage();
+                }
+            }
+        });
+    }*/
 
     @Override
     public void delete(long personId) {

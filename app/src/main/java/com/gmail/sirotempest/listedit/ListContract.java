@@ -20,7 +20,7 @@ public interface ListContract {
 
         void openConfirmDeleteDialog(Product product);
 
-        void filterStatus(int chosenStatus, Product product);
+        //void filterStatus(int chosenStatus);
 
         void delete(long personId);
     }

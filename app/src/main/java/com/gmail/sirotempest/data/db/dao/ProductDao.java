@@ -29,8 +29,8 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE id=:id")
     Product findProduct(long id);
 
-    @Query("SELECT * FROM products WHERE status= :status")
-    List<Product> filterStatus(int status);
+/*    @Query("SELECT * FROM products WHERE status= :status")
+    LiveData<List<Product>> filterStatus(int status);*/
 
     @Insert(onConflict = IGNORE)
     long insertProduct(Product product);
