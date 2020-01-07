@@ -24,7 +24,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:background="@drawable/circle_color_1" />
+            android:src="@drawable/circle_color_1" />
 
 
         <ImageView
